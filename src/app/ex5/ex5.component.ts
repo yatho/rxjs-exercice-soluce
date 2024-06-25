@@ -7,7 +7,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
   selector: 'app-ex5',
   standalone: true,
   imports: [FormsModule],
-  template: `,
+  template: `
     <input type="text" [(ngModel)]="val" />
   `
 })
@@ -16,7 +16,7 @@ export class Ex5Component {
   // TODO : Afficher dans la console à chaque fois que l'utilisateur change la valeur de l'input
   // TODO : Utiliser un opérateur pour limiter le nombre de valeurs émises si l'input change trop rapidement
   // TODO : Utiliser un opérateur pour émettre que si il y a un changement de valeur
-  protected val = model();
+  protected val = model<string>();
   private valObs = toObservable(this.val).pipe(
     debounceTime(500),
     distinctUntilChanged()
@@ -24,7 +24,7 @@ export class Ex5Component {
   private valSig = toSignal(this.valObs)
 
   constructor() {
-    this.valObs.subscribe(console.log);
+    // this.valObs.subscribe(console.log);
     effect(() => {
       console.log(this.valSig());
     })
